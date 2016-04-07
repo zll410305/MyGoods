@@ -1,0 +1,21 @@
+//
+//  MD_CollectionViewCell.h
+//  Lgoods
+//
+//  Created by Administrator on 16/3/29.
+//  Copyright © 2016年 NSObject. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface MD_CollectionViewCell : UICollectionViewCell
+
+@property (strong, nonatomic)UIImageView *picture;//图片
+
+@property (strong, nonatomic)UILabel *titleLab;//标题
+
+@property (strong, nonatomic)UILabel *priceLab;// 价格
+
+@property (strong, nonatomic)UILabel *numberLab;// 销量
+
+@end
