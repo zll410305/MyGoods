@@ -48,6 +48,8 @@
         self.colorLab.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.colorLab];
         
+        
+        
         //4.衣服尺寸
         self.sizeLab = [[UILabel alloc]init];
         self.sizeLab.font = [UIFont systemFontOfSize:12];
