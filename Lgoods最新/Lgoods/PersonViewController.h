@@ -20,7 +20,9 @@
 
 @property (strong,nonatomic)NSArray *arr;
 
-@property (strong,nonatomic)UILabel *pholab;
+@property (strong,nonatomic)UILabel *namelab;
+
+@property (strong,nonatomic)UIImageView *phoimg;
 
 
 @end
