@@ -12,7 +12,7 @@
 
 #define IMKEY @"z3v5yqkbvtle0"
 #define TOKEN @"6Ml3fJv8ku5Avi28mV+VEfxDftxsmBLLTlu9eF3yvtSQErfIAoEst6bpI0dt4wV8aYhO1oO+8A1AoodvsMgtaPVZREzlJ4Cz"
-@interface PersonViewController ()<RCIMUserInfoDataSource>
+@interface PersonViewController ()<RCIMUserInfoDataSource,UITableViewDataSource,UITableViewDelegate>
 
 @end
 
@@ -20,6 +20,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+     self.view.backgroundColor = [UIColor whiteColor];
+    self.vie=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    self.vie.backgroundColor=[UIColor orangeColor];
+    [self.view addSubview:self.vie];
+    
+    
+    
+    UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(125,self.vie.frame.size.height-37 , 80, 30)];
+    lab.text=@"个人中心";
+    lab.textColor=[UIColor whiteColor];
+    lab.font=[UIFont systemFontOfSize:18];
+    [self.vie addSubview:lab];
+    
+    
+    
+    
+    //数组
+    self.arr=@[@"我的消息",@"我的收藏",@"我的穿搭秀",@"关于"];
+
+    
+    //tab
+    
+    self.tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    self.tab.delegate=self;
+    self.tab.dataSource=self;
+    self.tab.scrollEnabled=NO;
+    self.tab.separatorStyle=UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tab];
+    
+    
+    
+    
+}
+
+
+
+-(void)test{
+    
     [[RCIM sharedRCIM] initWithAppKey:IMKEY];
     
     [[RCIM sharedRCIM] connectWithToken:TOKEN success:^(NSString *userId) {
@@ -33,9 +72,11 @@
         //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
         NSLog(@"token错误");
     }];
+
     
-     self.view.backgroundColor = [UIColor whiteColor];
+    
 }
+
 
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
     
@@ -53,14 +94,113 @@
     return completion(userinfo1);
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    
+    return 1;
+    
+    
 }
-*/
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    return 5;
+    
+    
+    
+}
+
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    CGFloat i;
+    if (section==0) {
+        i=120;
+    }else{
+        
+        i=10;
+    }
+    return i;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    return 50;
+    
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *str=@"e";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:str];
+    if (cell==nil) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:str];
+    }
+    switch (indexPath.section) {
+        case 0:
+            cell.textLabel.text=self.arr[indexPath.section];
+            break;
+        case 1:
+            cell.textLabel.text=self.arr[indexPath.section];
+            break;
+
+        case 2:
+            cell.textLabel.text=self.arr[indexPath.section];
+            break;
+
+        case 3:
+            cell.textLabel.text=self.arr[indexPath.section];
+            break;
+
+            
+        default:
+            break;
+    }
+    return cell;
+    
+    
+    
+    
+    
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *heaview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tab.frame.size.width, 120)];
+    if (section==0) {
+        
+        
+        self.vie2=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tab.frame.size.width, 120)];
+        
+        UIView *vie=[[UIView alloc]initWithFrame:CGRectMake(0, 110, self.vie2.frame.size.width, 10)];
+        vie.backgroundColor=[UIColor groupTableViewBackgroundColor];
+        [self.vie2 addSubview:vie];
+
+        self.vie2.backgroundColor=[UIColor whiteColor];
+        heaview=self.vie2;
+    }else{
+        
+        UIView *vie=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tab.frame.size.width, 10)];
+        vie.backgroundColor=[UIColor groupTableViewBackgroundColor];
+
+        heaview=vie;
+        
+    }
+    
+   
+    return heaview;
+    
+    
+    
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+}
 
 @end

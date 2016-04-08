@@ -42,4 +42,6 @@
 @property (strong,nonatomic)UIView *heaview;
 
 @property (strong,nonatomic)UIView *heaview2;
+
+@property (strong,nonatomic)UITableView *tab;
 @end

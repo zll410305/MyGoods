@@ -18,9 +18,15 @@
 
 @property (strong, nonatomic)UILabel *showText;
 
+@property (strong, nonatomic)UIImageView *timeImage;
+
 @property (strong, nonatomic)UILabel *timeLab;
 
+@property (strong, nonatomic)UIButton *commentBtn;
+
 @property (strong, nonatomic)UILabel *commentNum;
+
+@property (strong, nonatomic)UIButton *supportBtn;
 
 @property (strong, nonatomic)UILabel *supportNum;
 

@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic)UITextView *inputText;
 
+@property (strong, nonatomic)UIButton *addPic;
+
 @end
 
 @implementation AddShowViewController
@@ -38,10 +40,10 @@
     }
     [self.view addSubview:_inputText];
     
-    UIButton *addPic = [[UIButton alloc]initWithFrame:CGRectMake(15, 335, 30, 30)];
-    [addPic setBackgroundImage:[UIImage imageNamed:@"tbbuy_item_increase@2x.png"] forState:UIControlStateNormal];
-    [addPic addTarget:self action:@selector(chosePic) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:addPic];
+    self.addPic = [[UIButton alloc]initWithFrame:CGRectMake(20, 270, 90, 90)];
+    [self.addPic setBackgroundImage:[UIImage imageNamed:@"tbbuy_item_increase@2x.png"] forState:UIControlStateNormal];
+    [self.addPic addTarget:self action:@selector(chosePic) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_addPic];
 }
 
 - (void)chosePic{
@@ -93,7 +95,12 @@
      * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
      * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
      */
-    [self saveImage:image withName:@"sdddssds.png"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateStyle:NSDateFormatterFullStyle];
+    [dateFormatter setDateFormat:@"yyyyMMdd_HHmmss"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    NSString *newPicName = [NSString stringWithFormat:@"IMG_%@.png",dateString];
+    [self saveImage:image withName:newPicName];
     
 }
 
@@ -111,10 +118,24 @@
     NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     // 获取沙盒目录
     
-    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"tmp"] stringByAppendingPathComponent:imageName];
     // 将图片写入文件
-    
+    NSString *path1 = NSHomeDirectory();
+    NSLog(@"%@",path1);
     [imageData writeToFile:fullPath atomically:YES];
+    
+    UIImageView *imageView = [[UIImageView alloc]init];
+    imageView.image = [UIImage imageWithContentsOfFile:fullPath];
+    imageView.frame = self.addPic.frame;
+    [self.view addSubview:imageView];
+    
+    CGRect frame = _addPic.frame;
+    frame.origin.x = frame.origin.x + 95;
+    _addPic.frame = frame;
+    if (frame.origin.x >= 300) {
+        self.addPic.hidden = YES;
+    }
+    
 }
 
 //   图片压缩

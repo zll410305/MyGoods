@@ -9,6 +9,7 @@
 #import "MoreViewController.h"
 #import "H_requestDateService.h"
 #import "MD_CollectionViewCell.h"
+#import "DetailViewController.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -36,8 +37,8 @@
     
     self.typeArr = @[@"上衣",@"外套",@"衬衫",@"休闲裤",@"牛仔裤",@"羽绒服"];
     
-    self.bigScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 50+64, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
-    self.bigScroll.contentSize = CGSizeMake(SCREEN_WIDTH * _typeArr.count, SCREEN_HEIGHT-50);
+    self.bigScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 50+64, SCREEN_WIDTH, SCREEN_HEIGHT-114)];
+    self.bigScroll.contentSize = CGSizeMake(SCREEN_WIDTH * _typeArr.count, SCREEN_HEIGHT-114);
     self.bigScroll.pagingEnabled = YES;
     self.bigScroll.delegate = self;
     self.bigScroll.directionalLockEnabled = NO;
@@ -53,7 +54,7 @@
     [layout setMinimumInteritemSpacing:1];
     [layout setMinimumLineSpacing:2];
     
-    self.discountCollection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64) collectionViewLayout:layout];
+    self.discountCollection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114) collectionViewLayout:layout];
     self.discountCollection.dataSource = self;
     self.discountCollection.delegate = self;
     self.discountCollection.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -124,7 +125,7 @@
             [btn setSelected:NO];
         }
     }
-    self.discountCollection.frame = CGRectMake(SCREEN_WIDTH*k, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64);
+    self.discountCollection.frame = CGRectMake(SCREEN_WIDTH*k, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 114);
 }
 
 /**
@@ -146,7 +147,7 @@
  */
 - (void)selectType:(UIButton *)sender{
     int k = (int)self.bigScroll.contentOffset.x/SCREEN_WIDTH;
-    self.discountCollection.frame = CGRectMake(SCREEN_WIDTH*k, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64);
+    self.discountCollection.frame = CGRectMake(SCREEN_WIDTH*k, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 114);
     for (int i = 0; i < _typeArr.count; i++) {
         UIButton *btn = (UIButton *)[self.topScroll viewWithTag:4000+i];
         if (btn.tag == sender.tag) {
@@ -208,7 +209,8 @@
 // UICollectionView被选中时调用的方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    NSLog(@"%@",indexPath);
+    DetailViewController *detail = [[DetailViewController alloc]init];
+    [self.navigationController pushViewController:detail animated:YES];
     
 }
 

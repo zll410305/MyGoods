@@ -10,4 +10,17 @@
 
 @interface PersonViewController : UIViewController
 
+@property (strong,nonatomic)UIView *vie;
+
+@property (strong,nonatomic)UIButton *leftbut;
+
+@property (strong,nonatomic)UITableView *tab;
+
+@property (strong,nonatomic)UIView *vie2;
+
+@property (strong,nonatomic)NSArray *arr;
+
+@property (strong,nonatomic)UILabel *pholab;
+
+
 @end

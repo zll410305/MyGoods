@@ -9,6 +9,9 @@
 #import "ShopViewController.h"
 #import "SearViewController.h"
 #import "ShopCollectionViewCell.h"
+#import "ChatViewController.h"
+#import "ShopDetailViewController.h"
+#import "DetailViewController.h"
 @interface ShopViewController ()<UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 @end
@@ -68,34 +71,37 @@
     
     
     //头页面2
-    self.heaview2=[[UIView alloc]initWithFrame:CGRectMake(0, 72, self.view.frame.size.width, 50)];
+    self.heaview2=[[UIView alloc]initWithFrame:CGRectMake(0, 136, self.view.frame.size.width, 50)];
     self.heaview2.backgroundColor=[UIColor whiteColor];
     
     self.but1=[[UIButton alloc]initWithFrame:CGRectMake(20, 10, 62, 30)];
     self.but1.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but1.tag=100;
     [self.but1 setTitle:@"女上衣" forState:UIControlStateNormal];
     [self.but1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.but1 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    [self.but1 addTarget:self action:@selector(test1) forControlEvents:UIControlEventTouchUpInside];
+    [self.but1 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
     [self.heaview2 addSubview:self.but1];
     
     
     self.but2=[[UIButton alloc]initWithFrame:CGRectMake(92, 10, 62, 30)];
       self.but2.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but2.tag=101;
     [self.but2 setTitle:@"女裤" forState:UIControlStateNormal];
     [self.but2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.but2 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    [self.but2 addTarget:self action:@selector(test2) forControlEvents:UIControlEventTouchUpInside];
+    [self.but2 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.heaview2 addSubview:self.but2];
 
     
     self.but3=[[UIButton alloc]initWithFrame:CGRectMake(170, 10, 62, 30)];
       self.but3.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but3.tag=102;
     [self.but3 setTitle:@"男上衣" forState:UIControlStateNormal];
     [self.but3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.but3 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    [self.but3 addTarget:self action:@selector(test3) forControlEvents:UIControlEventTouchUpInside];
+    [self.but3 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.heaview2 addSubview:self.but3];
 
@@ -104,10 +110,11 @@
     
     self.but4=[[UIButton alloc]initWithFrame:CGRectMake(242, 10, 62, 30)];
       self.but4.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but4.tag=103;
     [self.but4 setTitle:@"男裤" forState:UIControlStateNormal];
     [self.but4 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.but4 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    [self.but4 addTarget:self action:@selector(test4) forControlEvents:UIControlEventTouchUpInside];
+    [self.but4 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.heaview2 addSubview:self.but4];
 
@@ -134,7 +141,7 @@
     [self.tabbut1 addSubview:sevlab];
     [self.tabview addSubview:self.tabbut1];
     
-    //店铺简介
+    //收藏
     
     self.tabbut2=[[UIButton alloc]initWithFrame:CGRectMake(50, 0, 135, 50)];
     self.tabbut2.backgroundColor=[UIColor colorWithRed:255.0/255.0 green:155.0/255.0 blue:0 alpha:1];
@@ -142,9 +149,11 @@
     [self.tabbut2 addTarget:self action:@selector(tabtest2) forControlEvents:UIControlEventTouchUpInside];
     [self.tabview addSubview:self.tabbut2];
 
-    //收藏
+    //店铺简介
     self.tabbut3=[[UIButton alloc]initWithFrame:CGRectMake(185, 0, 135, 50)];
     [self.tabbut3 setTitle:@"店家详情" forState:UIControlStateNormal];
+    [self.tabbut3 addTarget:self action:@selector(tabtest3) forControlEvents:UIControlEventTouchUpInside];
+
     [self.tabview addSubview:self.tabbut3];
     
     
@@ -163,8 +172,20 @@
     [self.shopcollection registerClass:[ShopCollectionViewCell class] forCellWithReuseIdentifier:@"c"];
     [self.shopcollection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"resu"];
     [self.view addSubview:self.shopcollection];
+    
+    
+    [self.view addSubview:self.heaview2];
+    
+    
+    
+  
 
 }
+
+
+
+
+
 -(void)back2{
     
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -209,7 +230,7 @@
     
   return CGSizeMake(self.view.frame.size.width, 122);
 
-    
+
     
     
 }
@@ -244,7 +265,8 @@
     UICollectionReusableView *headview=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"resu" forIndexPath:indexPath];
     
     [headview addSubview:self.heaview];
-    [headview addSubview:self.heaview2];
+    
+   
     
     return headview;
     
@@ -253,26 +275,49 @@
 }
 
 
--(void)test1{
+-(void)test1:(UIButton*)sender{
     
-}
-
--(void)test2{
+    self.but1.selected=NO;
+     self.but2.selected=NO;
+     self.but3.selected=NO;
+     self.but4.selected=NO;
     
-}
+    switch (sender.tag) {
+        case 100:
+            self.but1.selected=YES;
+            break;
+        case 101:
+            self.but2.selected=YES;
+            break;
+        case 102:
+            self.but3.selected=YES;
+            break;
+        case 103:
+            self.but4.selected=YES;
+            break;
 
--(void)test3{
+
+        default:
+            break;
+    }
     
-}
-
--(void)test4{
+    
     
 }
 
 -(void)tabtest{
     
     
-    
+    //新建一个聊天会话View Controller对象
+    ChatViewController *chat = [[ChatViewController alloc]init];
+    //设置会话的类型，如单聊、讨论组、群聊、聊天室、客服、公众服务会话等
+    chat.conversationType = ConversationType_PRIVATE;
+    //设置会话的目标会话ID。（单聊、客服、公众服务会话为对方的ID，讨论组、群聊、聊天室为会话的ID）
+    chat.targetId = @"123456";
+    //设置聊天会话界面要显示的标题
+    chat.title = @"会话";
+    //显示聊天会话界面
+    [self.navigationController pushViewController:chat animated:YES];
     
     
 }
@@ -282,6 +327,44 @@
     
     
     
+}
+
+-(void)tabtest3{
+    
+    [self.navigationController pushViewController:[[ShopDetailViewController alloc]init] animated:YES];
+    
+    
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat hea2=self.shopcollection.contentOffset.y;
+    if (0< hea2 && hea2 <74) {
+        self.heaview2.frame=CGRectMake(0, 136-hea2, self.view.frame.size.width, 50);
+        
+    }
+
+    
+    
+}
+
+-(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    return YES;
+    
+    
+    
+}
+
+
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+        [self.navigationController pushViewController:[[DetailViewController alloc]init] animated:YES];
+    NSLog(@"heh");
 }
 
 - (void)didReceiveMemoryWarning {
