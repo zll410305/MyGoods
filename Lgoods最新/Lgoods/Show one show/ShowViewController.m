@@ -9,6 +9,7 @@
 #import "ShowViewController.h"
 #import "ShowTableViewCell.h"
 #import "AddShowViewController.h"
+#import "ShowDetailViewController.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -18,6 +19,8 @@
 
 @property (strong, nonatomic)UITableView *showTableView;
 
+@property (assign, nonatomic)int num;
+
 @end
 
 @implementation ShowViewController
@@ -25,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.num = 0;
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStylePlain target:self action:@selector(addShow:)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -75,16 +79,31 @@
     if (cell == nil) {
         cell = [[ShowTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    cell.userPic.image = [UIImage imageNamed:@"u=2772435171,1183253776&fm=96&s=F3905C8956226CB5AE18D4DF0300D034.jpg"];
+    cell.userPic.image = [UIImage imageNamed:@"CCBC2898B962280D4EC64589A6B1E647.png"];
     cell.userName.text = @"有缘人2830";
     cell.showPic.image = [UIImage imageNamed:@"CCBC2898B962280D4EC64589A6B1E647.png"];
     [cell setIntroductionText:@" 其中如果options参数为NSStringDrawingUsesLineFragmentOrigin，那么整个文本将以每行组成的矩形为单位计算整个文本的尺寸。（在这里有点奇怪，因为字体高度大概是13.8，textView中大概有10行文字，此时用该选项计算出来的只有5行，即高度为69，而同时使用NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin却可以得出文字刚好有10行，即高度为138，这里要等iOS7官方的文档出来再看看选项的说明，因为毕竟以上文档是iOS6的东西）\n如果为NSStringDrawingTruncatesLastVisibleLine或者NSStringDrawingUsesDeviceMetric，那么计算文本尺寸时将以每个字或字形为单位来计算。\n如果为NSStringDrawingUsesFontLeading则以字体间的行距（leading，行距：从一行文字的底部到另一行文字底部的间距。）来计算。"];
     cell.timeLab.text = @"20:00";
+    cell.commentBtn.tag = 1000 + indexPath.row;
+    [cell.commentBtn addTarget:self action:@selector(commentShow:) forControlEvents:UIControlEventTouchUpInside];
     cell.commentNum.text = @"0";
+    cell.supportBtn.tag = 2000 + indexPath.row;
+    [cell.supportBtn addTarget:self action:@selector(supportShow:) forControlEvents:UIControlEventTouchUpInside];
     cell.supportNum.text = @"0";
+    cell.tag = 3000 + indexPath.row;
     return cell;
 }
 
+
+- (void)commentShow:(UIButton *)sender{
+    NSLog(@"cccccccccccccc%ld",(long)sender.tag);
+}
+
+- (void)supportShow:(UIButton *)sender{
+    ShowTableViewCell *cell = (ShowTableViewCell *)[_showTableView viewWithTag:sender.tag+1000];
+    cell.supportNum.text = [NSString stringWithFormat:@"%d",self.num++];
+    NSLog(@"ssssssssss%d",_num);
+}
 
 - (void)changeType:(UIButton *)sender{
     for (int i = 0; i < 3; i++) {
@@ -116,6 +135,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    ShowDetailViewController *showDeatil = [[ShowDetailViewController alloc]init];
+    [self.navigationController pushViewController:showDeatil animated:YES];
 }
 
 

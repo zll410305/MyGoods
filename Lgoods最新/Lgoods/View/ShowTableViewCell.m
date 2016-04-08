@@ -12,12 +12,6 @@
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 @interface ShowTableViewCell ()
 
-@property (strong, nonatomic)UIImageView *timeImage;
-
-@property (strong, nonatomic)UIImageView *commentImage;
-
-@property (strong, nonatomic)UIImageView *supportImage;
-
 @end
 
 @implementation ShowTableViewCell
@@ -50,17 +44,17 @@
         self.timeLab.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:_timeLab];
         
-        self.commentImage = [[UIImageView alloc]init];
-        self.commentImage.image = [UIImage imageNamed:@"rate_comment_button@2x.png"];
-        [self.contentView addSubview:_commentImage];
+        self.commentBtn = [[UIButton alloc]init];
+        [self.commentBtn setBackgroundImage:[UIImage imageNamed:@"rate_comment_button@2x.png"] forState:UIControlStateNormal];
+        [self.contentView addSubview:_commentBtn];
         
         self.commentNum = [[UILabel alloc]init];
         self.commentNum.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:_commentNum];
         
-        self.supportImage = [[UIImageView alloc]init];
-        self.supportImage.image = [UIImage imageNamed:@"rate_like_button@3x.png"];
-        [self.contentView addSubview:_supportImage];
+        self.supportBtn = [[UIButton alloc]init];
+        [self.supportBtn setBackgroundImage:[UIImage imageNamed:@"rate_like_button@3x.png"] forState:UIControlStateNormal];
+        [self.contentView addSubview:_supportBtn];
         
         self.supportNum = [[UILabel alloc]init];
         self.supportNum.font = [UIFont systemFontOfSize:12];
@@ -73,8 +67,8 @@
 - (void)initLayout{
     self.userPic.frame = CGRectMake(10, 10, 30, 30);
     self.userName.frame = CGRectMake(50, 10, 200, 30);
-    self.showPic.frame = CGRectMake(10, 50, SCREEN_WIDTH - 20, (SCREEN_WIDTH - 20)*3/3);
-    self.showText.frame = CGRectMake(10, 60 + (SCREEN_WIDTH - 20)*3/3, SCREEN_WIDTH - 20, 100);
+    self.showPic.frame = CGRectMake(10, 50, SCREEN_WIDTH - 20, SCREEN_WIDTH - 20);
+    self.showText.frame = CGRectMake(10, 60 + SCREEN_WIDTH - 20, SCREEN_WIDTH - 20, 100);
 }
 
 //赋值 and 自动换行,计算出cell的高度
@@ -97,9 +91,9 @@
     self.timeImage.frame = CGRectMake(10, _showText.frame.origin.y + _showText.frame.size.height + 10, 20, 20);
     
     self.timeLab.frame = CGRectMake(35, _showText.frame.origin.y + _showText.frame.size.height + 10, 100, 20);
-    self.commentImage.frame = CGRectMake(195, _showText.frame.origin.y + _showText.frame.size.height + 10, 20, 20);
+    self.commentBtn.frame = CGRectMake(195, _showText.frame.origin.y + _showText.frame.size.height + 10, 20, 20);
     self.commentNum.frame = CGRectMake(220, _showText.frame.origin.y + _showText.frame.size.height + 10, 40, 20);
-    self.supportImage.frame = CGRectMake(250, _showText.frame.origin.y + _showText.frame.size.height + 10, 20, 20);
+    self.supportBtn.frame = CGRectMake(250, _showText.frame.origin.y + _showText.frame.size.height + 10, 20, 20);
     self.supportNum.frame = CGRectMake(275, _showText.frame.origin.y + _showText.frame.size.height + 10, 40, 20);
 
     //计算出自适应的高度

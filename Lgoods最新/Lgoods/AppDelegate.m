@@ -49,6 +49,7 @@
         
         PersonViewController *personVC = [[PersonViewController alloc]init];
         UINavigationController *nav5 = [[UINavigationController alloc]initWithRootViewController:personVC];
+         nav5.navigationBarHidden=YES;
         
         //tabBar
         UITabBarController *tabBar = [[UITabBarController alloc]init];
