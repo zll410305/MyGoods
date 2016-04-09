@@ -8,11 +8,12 @@
 
 #import "PersonViewController.h"
 #import <RongIMKit/RongIMKit.h>
-
+#import "LandViewController.h"
+#import "Myrequst.h"
 
 #define IMKEY @"z3v5yqkbvtle0"
 #define TOKEN @"6Ml3fJv8ku5Avi28mV+VEfxDftxsmBLLTlu9eF3yvtSQErfIAoEst6bpI0dt4wV8aYhO1oO+8A1AoodvsMgtaPVZREzlJ4Cz"
-@interface PersonViewController ()<RCIMUserInfoDataSource,UITableViewDataSource,UITableViewDelegate>
+@interface PersonViewController ()<RCIMUserInfoDataSource,UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @end
 
@@ -34,16 +35,25 @@
     lab.font=[UIFont systemFontOfSize:18];
     [self.vie addSubview:lab];
     
+    self.failbut=[[UIButton alloc]initWithFrame:CGRectMake(8, 450, 300, 40)];
+    self.failbut.backgroundColor=[UIColor orangeColor];
+    self.failbut.layer.cornerRadius=10;
+    [self.failbut setTitle:@"退出账号" forState:UIControlStateNormal];
+    [self.failbut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal] ;
+    [self.failbut setTitleColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.1] forState:UIControlStateHighlighted];
     
+    [self.failbut addTarget:self action:@selector(failbuttest) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.failbut];
+
     
     
     //数组
-    self.arr=@[@"我的消息",@"我的收藏",@"我的穿搭秀",@"关于"];
+    self.arr2=@[@"我的消息",@"我的收藏",@"我的穿搭秀",@"关于"];
 
     
     //tab
     
-    self.tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    self.tab=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-200)];
     self.tab.delegate=self;
     self.tab.dataSource=self;
     self.tab.scrollEnabled=NO;
@@ -78,6 +88,17 @@
 }
 
 
+
+
+-(void)failbuttest{
+    
+    [Myrequst Delete];
+    LandViewController *lan=[[LandViewController alloc]init];
+    [self.navigationController pushViewController:lan animated:YES];
+    [self.tab reloadData];
+    
+    
+}
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
     
     if ([userId isEqualToString:@"1234567"]) {
@@ -140,18 +161,18 @@
     }
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text=self.arr[indexPath.section];
+            cell.textLabel.text=self.arr2[indexPath.section];
             break;
         case 1:
-            cell.textLabel.text=self.arr[indexPath.section];
+            cell.textLabel.text=self.arr2[indexPath.section];
             break;
 
         case 2:
-            cell.textLabel.text=self.arr[indexPath.section];
+            cell.textLabel.text=self.arr2[indexPath.section];
             break;
 
         case 3:
-            cell.textLabel.text=self.arr[indexPath.section];
+            cell.textLabel.text=self.arr2[indexPath.section];
             break;
 
             
@@ -170,10 +191,51 @@
     if (section==0) {
         
         
+        //两个点击手势
+        
+        UITapGestureRecognizer *tap1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap1test)];
+        
+        UITapGestureRecognizer *tap2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap2test)];
+
+        
+        
+        
         self.vie2=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tab.frame.size.width, 120)];
         
         UIView *vie=[[UIView alloc]initWithFrame:CGRectMake(0, 110, self.vie2.frame.size.width, 10)];
         vie.backgroundColor=[UIColor groupTableViewBackgroundColor];
+        //图片
+        self.phoimg=[[UIImageView alloc]initWithFrame:CGRectMake(20, 25, 60, 60)];
+        self.phoimg.layer.cornerRadius=30;
+        self.phoimg.layer.masksToBounds = YES;
+        self.phoimg.userInteractionEnabled=YES;
+       
+        [Myrequst Lot:^(NSData *data) {
+            if (data==nil) {
+                 self.phoimg.image=[UIImage imageNamed:@"pho1.jpg"];
+            }else{
+                self.phoimg.image=[NSKeyedUnarchiver unarchiveObjectWithData:data];}
+        }];
+
+        [self.phoimg addGestureRecognizer:tap1];
+        [self.vie2 addSubview:self.phoimg];
+        
+        
+        
+        //姓名
+        self.namelab=[[UILabel alloc]initWithFrame:CGRectMake(100, 30, 120, 30)];
+               [Myrequst Read:^(NSArray *arr) {
+            self.readarr=[NSArray arrayWithArray:arr];
+        }];
+        if (self.readarr.count==0) {
+            self.namelab.text=@"未登陆";
+            
+
+        }else{
+            self.namelab.text=self.readarr[0];}
+        [self.vie2 addSubview:self.namelab];
+        self.namelab.userInteractionEnabled=YES;
+        [self.namelab addGestureRecognizer:tap2];
         [self.vie2 addSubview:vie];
 
         self.vie2.backgroundColor=[UIColor whiteColor];
@@ -202,5 +264,64 @@
     
     
 }
+
+
+//选择图片手势
+-(void)tap1test{
+    
+    //打开相册
+    UIImagePickerController *imgpick=[[UIImagePickerController alloc]init];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        imgpick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        //pickerImage.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+       imgpick.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imgpick.sourceType];
+        
+    }
+    //允许编辑
+    imgpick.allowsEditing=YES;
+       imgpick.delegate=self;
+    [self presentViewController:imgpick animated:YES completion:nil];
+    
+
+    
+}
+
+//
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *img=[info objectForKey:UIImagePickerControllerEditedImage];
+    NSData *data=[NSKeyedArchiver archivedDataWithRootObject:img];
+    [Myrequst Let:data];
+    self.phoimg.image=img;
+    
+   // NSUserDefaults  取图片
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+//登陆注册手势
+-(void)tap2test{
+    
+    LandViewController *lab=[[LandViewController alloc]init];
+    lab.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:lab animated:YES];
+    
+    
+    
+    
+    
+}
+
+
+
+
+
 
 @end

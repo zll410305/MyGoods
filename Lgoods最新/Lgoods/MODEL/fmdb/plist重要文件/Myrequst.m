@@ -123,4 +123,92 @@
     
     
 }
+
+
+//写入NSUserDefaults
++(void)Write:(NSString *)namestr andWith:(NSString *)numstr andWith:(NSString *)i{
+    
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:namestr forKey:@"昵称"];
+    [user setObject:numstr forKey:@"密码"];
+    [user setObject:i forKey:@"手机号"];
+//   NSString *name=[user objectForKey:@"昵称"];
+//    NSString *num=[user objectForKey:@"密码"];
+//    NSString *pho=[user objectForKey:@"手机号"];
+//    NSLog(@"%@",name);
+//    NSLog(@"%@",num);
+//    NSLog(@"%@",pho);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+//读取NSUserDefaults值
+
++(void)Read:(void (^)(NSArray *))sucess{
+    
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *name=[user objectForKey:@"昵称"];
+    NSArray *arr=[NSArray arrayWithObjects:name, nil];
+//    NSLog(@"%@",name);
+    sucess(arr);
+    
+    
+    
+    
+    
+    
+    
+}
+
+
++(void)Delete{
+    
+     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user removeObjectForKey:@"昵称"];
+    [user removeObjectForKey:@"密码"];
+    [user removeObjectForKey:@"手机号"];
+    [user removeObjectForKey:@"图片"];
+
+    
+    
+    
+    
+    
+    
+    
+}
+
+
++(void)Let:(NSData *)data{
+    
+    
+    
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:data forKey:@"图片"];
+    NSData *tt=[user objectForKey:@"图片"];
+    NSLog(@"%@",tt);
+    
+    
+    
+    
+}
+
++(void)Lot:(void (^)(NSData *))sucess{
+    
+    
+    
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSData *imgdata=[user objectForKey:@"图片"];
+    sucess(imgdata);
+    
+    
+}
+
 @end

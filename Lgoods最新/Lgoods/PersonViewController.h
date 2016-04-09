@@ -18,11 +18,19 @@
 
 @property (strong,nonatomic)UIView *vie2;
 
-@property (strong,nonatomic)NSArray *arr;
+@property (strong,nonatomic)NSArray *arr2;
 
 @property (strong,nonatomic)UILabel *namelab;
 
 @property (strong,nonatomic)UIImageView *phoimg;
+
+@property (strong,nonatomic)NSArray *readarr;
+
+@property (strong,nonatomic)UIButton *failbut;
+
+
+
+
 
 
 @end

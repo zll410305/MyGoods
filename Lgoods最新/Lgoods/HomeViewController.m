@@ -20,6 +20,7 @@
 #import "NewClothesViewController.h"
 #import "ChatListViewController.h"
 
+
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
 
@@ -52,6 +53,9 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor whiteColor];
+
+    
+    
     
      self.mynav=[[MyNavigation alloc]initWithBgimg:nil andWithTitlelab:nil andWithtitleimg:nil andWithLeftbut:@"苏州" andWithRight:@"消息1"];
     

@@ -13,8 +13,13 @@
 #import "ShowViewController.h"
 #import "ShoppingCartViewController.h"
 #import "PersonViewController.h"
+#import <SMS_SDK/SMSSDK.h>
 
 @interface AppDelegate ()
+
+#define AppKey    @"1068c2846df00"
+#define AppSecret  @"3b3318a4a37dfbfab64e58f28faea893"
+
 @property (strong,nonatomic)UINavigationController *na;
 @end
 
@@ -22,7 +27,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [SMSSDK registerApp:AppKey withSecret:AppSecret];
+
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     if (![[NSUserDefaults standardUserDefaults]boolForKey:@"first"]) {

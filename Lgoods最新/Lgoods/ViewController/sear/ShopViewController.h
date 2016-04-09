@@ -43,5 +43,16 @@
 
 @property (strong,nonatomic)UIView *heaview2;
 
+@property (strong,nonatomic)UIView *heaview21;
+
 @property (strong,nonatomic)UITableView *tab;
+
+@property (strong,nonatomic)UIButton *but11;
+
+@property (strong,nonatomic)UIButton *but21;
+
+@property (strong,nonatomic)UIButton *but31;
+
+@property (strong,nonatomic)UIButton *but41;
+
 @end

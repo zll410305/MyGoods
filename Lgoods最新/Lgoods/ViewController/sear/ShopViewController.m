@@ -71,7 +71,7 @@
     
     
     //头页面2
-    self.heaview2=[[UIView alloc]initWithFrame:CGRectMake(0, 136, self.view.frame.size.width, 50)];
+    self.heaview2=[[UIView alloc]initWithFrame:CGRectMake(0, 72, self.view.frame.size.width, 50)];
     self.heaview2.backgroundColor=[UIColor whiteColor];
     
     self.but1=[[UIButton alloc]initWithFrame:CGRectMake(20, 10, 62, 30)];
@@ -118,6 +118,54 @@
 
     [self.heaview2 addSubview:self.but4];
 
+    //头页面副本
+    self.heaview21=[[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 50)];
+    self.heaview21.backgroundColor=[UIColor whiteColor];
+    self.heaview21.hidden=YES;
+    
+    self.but11=[[UIButton alloc]initWithFrame:CGRectMake(20, 10, 62, 30)];
+    self.but11.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but11.tag=200;
+    [self.but11 setTitle:@"女上衣" forState:UIControlStateNormal];
+    [self.but11 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.but11 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    [self.but11 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
+    [self.heaview21 addSubview:self.but11];
+    
+    
+    self.but21=[[UIButton alloc]initWithFrame:CGRectMake(92, 10, 62, 30)];
+    self.but21.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but21.tag=201;
+    [self.but21 setTitle:@"女裤" forState:UIControlStateNormal];
+    [self.but21 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.but21 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    [self.but21 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.heaview21 addSubview:self.but21];
+    
+    
+    self.but31=[[UIButton alloc]initWithFrame:CGRectMake(170, 10, 62, 30)];
+    self.but31.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but31.tag=202;
+    [self.but31 setTitle:@"男上衣" forState:UIControlStateNormal];
+    [self.but31 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.but31 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    [self.but31 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.heaview21 addSubview:self.but31];
+    
+    
+    
+    
+    self.but41=[[UIButton alloc]initWithFrame:CGRectMake(242, 10, 62, 30)];
+    self.but41.titleLabel.font=[UIFont systemFontOfSize:15];
+    self.but41.tag=203;
+    [self.but41 setTitle:@"男裤" forState:UIControlStateNormal];
+    [self.but41 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.but41 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+    [self.but41 addTarget:self action:@selector(test1:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.heaview21 addSubview:self.but41];
     
     //底部页面
     
@@ -174,7 +222,7 @@
     [self.view addSubview:self.shopcollection];
     
     
-    [self.view addSubview:self.heaview2];
+    [self.view addSubview:self.heaview21];
     
     
     
@@ -265,6 +313,7 @@
     UICollectionReusableView *headview=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"resu" forIndexPath:indexPath];
     
     [headview addSubview:self.heaview];
+    [headview addSubview:self.heaview2];
     
    
     
@@ -275,35 +324,45 @@
 }
 
 
+
+
+
 -(void)test1:(UIButton*)sender{
-    
     self.but1.selected=NO;
-     self.but2.selected=NO;
-     self.but3.selected=NO;
-     self.but4.selected=NO;
-    
-    switch (sender.tag) {
-        case 100:
-            self.but1.selected=YES;
-            break;
-        case 101:
-            self.but2.selected=YES;
-            break;
-        case 102:
-            self.but3.selected=YES;
-            break;
-        case 103:
-            self.but4.selected=YES;
-            break;
-
-
-        default:
-            break;
+    self.but2.selected=NO;
+    self.but3.selected=NO;
+    self.but4.selected=NO;
+    self.but11.selected=NO;
+    self.but21.selected=NO;
+    self.but31.selected=NO;
+    self.but41.selected=NO;
+    if (sender.tag==100||sender.tag==200) {
+        self.but1.selected=YES;
+        self.but11.selected=YES;
+    }else if (sender.tag==101||sender.tag==201){
+        self.but2.selected=YES;
+        self.but21.selected=YES;
+    }else if (sender.tag==102||sender.tag==202){
+        self.but3.selected=YES;
+        self.but31.selected=YES;
+        
+    }else if (sender.tag==103||sender.tag==203){
+        self.but4.selected=YES;
+        self.but41.selected=YES;
+        
     }
+
     
     
     
 }
+
+
+
+
+
+
+
 
 -(void)tabtest{
     
@@ -339,10 +398,16 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat hea2=self.shopcollection.contentOffset.y;
-    if (0< hea2 && hea2 <74) {
-        self.heaview2.frame=CGRectMake(0, 136-hea2, self.view.frame.size.width, 50);
+    if (hea2>72) {
+        self.heaview2.hidden=YES;
+        self.heaview21.hidden=NO;
+    }else{
+        
+        self.heaview2.hidden=NO;
+        self.heaview21.hidden=YES;
         
     }
+    
 
     
     
