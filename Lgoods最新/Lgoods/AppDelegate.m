@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "GudeViewController.h"
 #import "HomeViewController.h"
 #import "ClassViewController.h"
 #import "ShowViewController.h"
@@ -31,12 +30,7 @@
 
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
-    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"first"]) {
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"first"];
-        NSLog(@" 第一次进入");
-        self.window.rootViewController=[[GudeViewController alloc]init];
-        
-    }else{
+
         HomeViewController *homeVC = [[HomeViewController alloc]init];
         
         self.na=[[UINavigationController alloc]initWithRootViewController:homeVC];
@@ -77,11 +71,11 @@
         personVC.tabBarItem.image = [UIImage imageNamed:@"home_tab_personal_btn@2x"];
         tabBar.viewControllers = @[_na,nav2,nav3,nav4,nav5];
         NSLog(@" 不是第一次进入");
-        
-         self.window.rootViewController = tabBar;
-    }
     
-    [self.window makeKeyAndVisible];
+       tabBar.tabBar.hidden=YES;
+    
+         self.window.rootViewController = tabBar;
+           [self.window makeKeyAndVisible];
 
    
     

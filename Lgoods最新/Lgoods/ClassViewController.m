@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.view.backgroundColor = [UIColor orangeColor];
+     self.view.backgroundColor = [UIColor grayColor];
     //上导航
     self.mynav=[[MyNavigation alloc]initWithBgimg:nil andWithTitlelab:nil andWithtitleimg:nil andWithLeftbut:nil andWithRight:nil];
     

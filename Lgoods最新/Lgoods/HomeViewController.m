@@ -19,6 +19,7 @@
 #import "SearViewController.h"
 #import "NewClothesViewController.h"
 #import "ChatListViewController.h"
+#import "GudeViewController.h"
 
 
 #define SCREEN_WIDTH self.view.frame.size.width
@@ -51,6 +52,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.tabBarController.tabBar.hidden==YES) {
+        self.tabBarController.tabBar.hidden=NO;
+    }
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"first"]) {
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"first"];
+        NSLog(@" 第一次进入");
+        GudeViewController *gui=[[GudeViewController alloc]init];
+        [UIView animateWithDuration:0 animations:^{
+            [self presentViewController:gui animated:NO completion:nil];
+        }];
+        
+    
+    
+    
+    }
+    
     
     self.view.backgroundColor=[UIColor whiteColor];
 

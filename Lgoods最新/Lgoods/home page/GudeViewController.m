@@ -21,7 +21,12 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     UIScrollView *sc=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    sc.contentSize=CGSizeMake(self.view.frame.size.width*3, self.view.frame.size.height);
+   
+//    sc.contentSize=CGSizeMake(self.view.frame.size.height,0);
+     sc.contentSize=CGSizeMake(self.view.frame.size.width*3, self.view.frame.size.height);
+    sc.showsVerticalScrollIndicator=NO;
+    sc.showsHorizontalScrollIndicator = NO;
+    sc.bounces=NO;
     sc.pagingEnabled=YES;
     sc.delegate=self;
     [self.view addSubview:sc];
@@ -75,7 +80,8 @@
 -(void)test{
     
     
-    [self presentViewController:[[HomeViewController  alloc]init] animated:YES completion:nil];
+    [self  dismissViewControllerAnimated:YES completion:nil];
+   
     
 }
 

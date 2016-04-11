@@ -37,9 +37,8 @@
     //
     self.vie=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     self.vie.backgroundColor=[UIColor orangeColor];
-    self.but1=[[UIButton alloc]initWithFrame:CGRectMake(10, self.vie.frame.size.height-40, 30, 30)];
-    [self.but1 setTitle:@"返回" forState:UIControlStateNormal];
-    self.but1.titleLabel.font=[UIFont systemFontOfSize:12];
+    self.but1=[[UIButton alloc]initWithFrame:CGRectMake(10, self.vie.frame.size.height-30, 10, 15)];
+    [self.but1 setImage:[UIImage imageNamed:@"jiantou1"] forState:UIControlStateNormal];
     [self.but1 addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.vie addSubview:self.but1];
     
